@@ -35,3 +35,5 @@ generate_round()          # -> a random valid code with a "rounder" digit patter
 
 MIT — see [LICENSE](LICENSE). Original algorithm and project by
 [majidh1](https://github.com/majidh1).
+
+Python portal by [twilispar](https://github.com/twilispar)
