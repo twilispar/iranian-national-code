@@ -1,16 +1,19 @@
 """
 Generation logic for Iranian National Codes.
 
-Two generators are provided:
+Two single-code generators are provided:
 
 - generate(): produces a random, checksum-valid 10-digit code where
   each of the first 9 digits is drawn uniformly from 0-9.
 - generate_round(): produces a random, checksum-valid 10-digit code
   using a shrinking upper bound for each digit, which tends to
   produce "rounder" looking codes (more repeated low digits).
+
+Bulk versions of both are also provided.
 """
 
 import random
+from typing import List
 
 
 def _checksum(digits) -> int:
@@ -56,7 +59,7 @@ def generate_round() -> str:
     upper_bound = 10
 
     for _ in range(9):
-        upper_bound = max(upper_bound, 2) if upper_bound < 2 else upper_bound
+        upper_bound = 2 if upper_bound < 2 else upper_bound
         digit = random.randint(0, upper_bound - 1)
         digits.append(digit)
         upper_bound = digit
@@ -67,3 +70,25 @@ def generate_round() -> str:
         return generate_round()
 
     return "".join(str(d) for d in digits)
+
+
+def generate_bulk(count: int, round_style: bool = False) -> List[str]:
+    """
+    Generate multiple random, valid Iranian National Codes at once.
+
+    Args:
+        count: How many codes to generate.
+        round_style: If True, use generate_round() for each code
+            instead of the default generate().
+
+    Returns:
+        A list of `count` valid national code strings. Codes are
+        generated independently and may contain duplicates.
+
+    Example:
+        >>> codes = generate_bulk(5)
+        >>> len(codes)
+        5
+    """
+    fn = generate_round if round_style else generate
+    return [fn() for _ in range(count)]
