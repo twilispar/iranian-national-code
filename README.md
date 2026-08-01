@@ -74,3 +74,5 @@ uv build
 
 MIT — see [LICENSE](LICENSE). Original algorithm and project by
 [majidh1](https://github.com/majidh1).
+
+Python portal by [twilispar](https://github.com/twilispar)
